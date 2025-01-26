@@ -5,8 +5,10 @@ function App() {
   // state 쓰는 이유?
   // 일반변수는 변경되면 html에 자동으로 반영안됨 - 바뀌지 않는 데이터
   // state는 변경되면 state와 관련된 html을 자동 재렌더링 - 변경될 것 같은 데이터
+  // state 변경하는 법 -> state변경함수를 사용하여야 html 재렌더링 됨
   let post = "강남 우동 맛집";
-  let [글제목, b] = useState("남자 코트 추천");
+  let [글제목, b] = useState(["남자 코트 추천", "강남 우동 맛집", "파이썬 독학"]);
+  let [좋아요, 좋아요변경] = useState(0);
 
   return (
     // JSX 문법 1. class 넣을 땐 -> className
@@ -19,11 +21,17 @@ function App() {
       </div>
 
       <div className="list">
-        <h4>{글제목}</h4>
+        <h4>
+          {글제목[0]} <span onClick={()=>{좋아요변경(좋아요+1)}}>👍</span> {좋아요}
+        </h4>
         <p>2월 17일 발행</p>
       </div>
       <div className="list">
-        <h4>글제목</h4>
+        <h4>{글제목[1]}</h4>
+        <p>2월 17일 발행</p>
+      </div>
+      <div className="list">
+        <h4>{글제목[2]}</h4>
         <p>2월 17일 발행</p>
       </div>
 
