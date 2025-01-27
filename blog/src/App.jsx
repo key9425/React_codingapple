@@ -49,8 +49,27 @@ function App() {
       </div>
 
       <h4 className={post}>{post}</h4>
+
+      <Modal />
     </div>
   );
 }
+
+// Component 문법1
+function Modal() {
+  return (
+    <div className="modal">
+      <h4>제목</h4>
+      <p>날짜</p>
+      <p>상세내용</p>
+    </div>
+  )
+}
+// Component 문법2
+// const Modal = () => {
+//   return (
+//     <div></div>
+//   )
+// }
 
 export default App;
