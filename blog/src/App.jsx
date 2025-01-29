@@ -9,6 +9,7 @@ function App() {
   let post = "강남 우동 맛집";
   let [글제목, 글제목변경] = useState(["남자 코트 추천", "강남 우동 맛집", "파이썬 독학"]);
   let [좋아요, 좋아요변경] = useState(0);
+  let [modal, setModal] = useState(false); // UI의 현재 상태
 
   return (
     // JSX 문법 1. class 넣을 땐 -> className
@@ -44,13 +45,17 @@ function App() {
         <p>2월 17일 발행</p>
       </div>
       <div className="list">
-        <h4>{글제목[2]}</h4>
+        {/* <h4 onClick={()=>{modal ? setModal(false) : setModal(true)}}>{글제목[2]}</h4> */}
+        <h4 onClick={()=>{setModal(!modal)}}>{글제목[2]}</h4>
         <p>2월 17일 발행</p>
       </div>
 
       <h4 className={post}>{post}</h4>
 
-      <Modal />
+      {
+        // 조건식 ? 참일때실행할코드 : 거짓일때실행할코드
+        modal == true ? <Modal /> : null
+      }
     </div>
   );
 }
