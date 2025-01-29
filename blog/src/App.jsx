@@ -8,7 +8,7 @@ function App() {
   // state 변경하는 법 -> state변경함수를 사용하여야 html 재렌더링 됨
   let post = "강남 우동 맛집";
   let [글제목, 글제목변경] = useState(["남자 코트 추천", "강남 우동 맛집", "파이썬 독학"]);
-  let [좋아요, 좋아요변경] = useState(0);
+  let [좋아요, 좋아요변경] = useState([0, 0, 0]);
   let [modal, setModal] = useState(false); // UI의 현재 상태
 
   return (
@@ -36,19 +36,24 @@ function App() {
         글제목변경(copy);
       }}>정렬</button>
 
-      <div className="list">
-        <h4>{글제목[0]} <span onClick={()=>{좋아요변경(좋아요+1)}}>👍</span> {좋아요}</h4>
-        <p>2월 17일 발행</p>
-      </div>
-      <div className="list">
-        <h4>{글제목[1]}</h4>
-        <p>2월 17일 발행</p>
-      </div>
-      <div className="list">
-        {/* <h4 onClick={()=>{modal ? setModal(false) : setModal(true)}}>{글제목[2]}</h4> */}
-        <h4 onClick={()=>{setModal(!modal)}}>{글제목[2]}</h4>
-        <p>2월 17일 발행</p>
-      </div>
+      {
+        글제목.map(function(a, i){
+          return (
+            <div className="list" key={i}>
+              <h4 onClick={()=>{setModal(!modal)}}>
+                {a}
+                <span onClick={()=>{
+                  let copy = [...좋아요];
+                  copy[i] += 1;
+                  좋아요변경(copy);
+                  }}>👍</span>
+                {좋아요[i]}
+              </h4>
+              <p>2월 17일 발행</p>
+            </div>
+          )
+        })
+      }
 
       <h4 className={post}>{post}</h4>
 
