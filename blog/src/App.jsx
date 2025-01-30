@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from "react";
+import React, { useState } from "react";
 
 function App() {
   // state 쓰는 이유?
@@ -85,6 +85,8 @@ function App() {
         // 조건식 ? 참일때실행할코드 : 거짓일때실행할코드
         modal == true ? <Modal 글제목={글제목} color="skyblue" title={title}/> : null
       }
+
+      <Modal2 />
     </div>
   );
 }
@@ -106,5 +108,27 @@ function Modal(props) {
 //     <div></div>
 //   )
 // }
+
+// class Component 문법-> constructor, super, render, return
+class Modal2 extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      name : 'kim',
+      age : 20
+    }
+  }
+  render(){
+    return(
+      <div>
+        {/* {this.props} */}
+        {this.state.age}
+        <button onClick={()=>{
+          this.setState({age : 21})
+        }}>버튼</button>
+      </div>
+    );
+  }
+}
 
 export default App;
