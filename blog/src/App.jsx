@@ -11,6 +11,7 @@ function App() {
   let [좋아요, 좋아요변경] = useState([0, 0, 0]);
   let [modal, setModal] = useState(false); // UI의 현재 상태
   let [title, setTitle] = useState(0);
+  let [입력값, 입력값변경] = useState("");
 
   return (
     // JSX 문법 1. class 넣을 땐 -> className
@@ -37,13 +38,15 @@ function App() {
         글제목변경(copy);
       }}>정렬</button>
 
+
       {
         글제목.map(function(a, i){
           return (
             <div className="list" key={i}>
               <h4 onClick={()=>{setModal(!modal); setTitle(i);}}>
                 {a}
-                <span onClick={()=>{
+                <span onClick={(e)=>{
+                  e.stopPropagation();
                   let copy = [...좋아요];
                   copy[i] += 1;
                   좋아요변경(copy);
@@ -51,12 +54,32 @@ function App() {
                 {좋아요[i]}
               </h4>
               <p>2월 17일 발행</p>
+              <button onClick={()=>{
+                let copy = [...글제목];
+                copy.splice(i, 1);
+                글제목변경(copy);
+              }}>삭제</button>
             </div>
           )
         })
       }
 
       <h4 className={post}>{post}</h4>
+
+      {/* 입력 */}
+      {/* 태그: input, select, textarea */}
+      {/* type: text, range, checkbox, date, number */}
+      {/* 이벤트핸들러: onChange, onInput, onMouseOver, onScroll, ...등 */}
+      {/* 이벤트객체e - e.target, e.preventDefault(), e.stopPropagation() */}
+      <input onChange={(e)=>{
+        입력값변경(e.target.value);
+      }} />
+      <button onClick={()=>{
+        let copy = [...글제목];
+        copy.unshift(입력값);
+        글제목변경(copy)
+      }}>등록</button>
+
 
       {
         // 조건식 ? 참일때실행할코드 : 거짓일때실행할코드
