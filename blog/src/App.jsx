@@ -10,6 +10,7 @@ function App() {
   let [글제목, 글제목변경] = useState(["남자 코트 추천", "강남 우동 맛집", "파이썬 독학"]);
   let [좋아요, 좋아요변경] = useState([0, 0, 0]);
   let [modal, setModal] = useState(false); // UI의 현재 상태
+  let [title, setTitle] = useState(0);
 
   return (
     // JSX 문법 1. class 넣을 땐 -> className
@@ -40,7 +41,7 @@ function App() {
         글제목.map(function(a, i){
           return (
             <div className="list" key={i}>
-              <h4 onClick={()=>{setModal(!modal)}}>
+              <h4 onClick={()=>{setModal(!modal); setTitle(i);}}>
                 {a}
                 <span onClick={()=>{
                   let copy = [...좋아요];
@@ -59,19 +60,20 @@ function App() {
 
       {
         // 조건식 ? 참일때실행할코드 : 거짓일때실행할코드
-        modal == true ? <Modal /> : null
+        modal == true ? <Modal 글제목={글제목} color="skyblue" title={title}/> : null
       }
     </div>
   );
 }
 
 // Component 문법1
-function Modal() {
+function Modal(props) {
   return (
-    <div className="modal">
-      <h4>제목</h4>
+    <div className="modal" style={{background : props.color}}>
+      <h4>{props.글제목[props.title]}</h4>
       <p>날짜</p>
       <p>상세내용</p>
+      <button>글수정</button>
     </div>
   )
 }
