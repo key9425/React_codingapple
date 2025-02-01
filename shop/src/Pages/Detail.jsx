@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Nav } from "react-bootstrap";
 import "../App.css";
+import { Context1 } from "../App";
 
 let YellowBtn = styled.button`
   background: ${(props) => props.bg};
@@ -18,6 +19,8 @@ let Box = styled.div`
 `;
 
 function Detail(props) {
+  let { 재고 } = useContext(Context1); // Context1 해체해주는 함수 -> 보관한 state 사용용
+
   let { id } = useParams();
   let item = props.shoes.find((x) => x.id == id);
   let [탭, 탭변경] = useState(0);
@@ -114,7 +117,9 @@ function Detail(props) {
 }
 
 function TabContent(props) {
+  let { 재고 } = useContext(Context1);
   let [fade, setFade] = useState("");
+
   useEffect(() => {
     let a = setTimeout(() => {
       setFade("end");
@@ -124,6 +129,7 @@ function TabContent(props) {
       setFade("");
     };
   }, [props.탭]);
+
   // if (props.탭 == 0) {
   //   return <div>내용0</div>;
   // } else if (props.탭 == 1) {
@@ -131,7 +137,7 @@ function TabContent(props) {
   // } else if (props.탭 == 2) {
   //   return <div>내용2</div>;
   // }
-  return <div className={`start ${fade}`}>{[<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][props.탭]}</div>;
+  return <div className={`start ${fade}`}>{[<div>{재고}</div>, <div>내용1</div>, <div>내용2</div>][props.탭]}</div>;
 }
 
 export default Detail;
