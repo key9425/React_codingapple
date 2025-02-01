@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Nav } from "react-bootstrap";
+import "../App.css";
 
 let YellowBtn = styled.button`
   background: ${(props) => props.bg};
@@ -28,14 +29,17 @@ function Detail(props) {
   // useEffect(() => {  }, [실행조건 특정state]); // mount, 특정state 변경 실행
   // return ()=>{} // useEffect 동작 전, unmount 시에 실행, clean up function (-> 타이머제거, socket 연결요청제거, ajax요청 중단 등)
   let [show, setShow] = useState(true);
+  let [fade2, setFade2] = useState("");
   useEffect(() => {
     console.log(1);
     let a = setTimeout(() => {
       setShow(false);
     }, 2000);
+    setFade2("end2"); // 컴포넌트 로드시
     return () => {
       console.log(0);
       clearTimeout(a);
+      setFade2(""); //컴포넌트 삭제시
     };
   }, []);
 
@@ -47,7 +51,7 @@ function Detail(props) {
   }, [num]);
 
   return (
-    <div className="container">
+    <div className={`container start2 ${fade2}`}>
       <Box>
         <YellowBtn bg="blue">버튼</YellowBtn>
         <YellowBtn bg="orange">버튼</YellowBtn>
@@ -62,7 +66,7 @@ function Detail(props) {
 
       <div className="row">
         <div className="col-md-6">
-          <img src={"https://codingapple1.github.io/shop/shoes" + item.id + ".jpg"} width="100%" />
+          <img src={"https://codingapple1.github.io/shop/shoes" + (item.id + 1) + ".jpg"} width="100%" />
         </div>
         <div className="col-md-6">
           <h4 className="pt-5">{item.title}</h4>
@@ -110,6 +114,16 @@ function Detail(props) {
 }
 
 function TabContent(props) {
+  let [fade, setFade] = useState("");
+  useEffect(() => {
+    let a = setTimeout(() => {
+      setFade("end");
+    }, 10);
+    return () => {
+      clearTimeout(a);
+      setFade("");
+    };
+  }, [props.탭]);
   // if (props.탭 == 0) {
   //   return <div>내용0</div>;
   // } else if (props.탭 == 1) {
@@ -117,7 +131,7 @@ function TabContent(props) {
   // } else if (props.탭 == 2) {
   //   return <div>내용2</div>;
   // }
-  return [<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][props.탭];
+  return <div className={`start ${fade}`}>{[<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][props.탭]}</div>;
 }
 
 export default Detail;

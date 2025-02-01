@@ -10,3 +10,25 @@
   background-size: cover;
   background-position: center;
 }
+
+/* 애니메이션
+1. 애니메이션 동작 전 스타일을 담은 className 생성
+2. 애니메이션 동작 후 스타일을 담은 className 생성
+3. transition 속성 추가
+4. 원할 때 2번 탈탈부착
+*/
+.start {
+  transform: scale(0);  /* 텍스트 사이즈 스타일 */
+}
+.end {
+  transform: scale(1);
+  transition: all 0.5s; /* 해당 속성 변경될 때 설정한 시간에 걸쳐서 변경 */
+}
+
+.start2 {
+  opacity: 0; /* 투명도 주는 스타일 */
+}
+.end2 {
+  opacity: 1;
+  transition: opacity 0.5s; 
+}
