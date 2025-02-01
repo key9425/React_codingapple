@@ -1,11 +1,15 @@
 import "./App.css";
-import { Button, Navbar, Container, Nav } from "react-bootstrap";
-import bg from "./img/bg.png";
 import { useState } from "react";
+import { Button, Navbar, Container, Nav } from "react-bootstrap";
+import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
+import Detail from "./Pages/Detail.jsx";
+import Home from "./Pages/Home.jsx";
+import About from "./Pages/About.jsx";
 import data from "./data.jsx";
 
 function App() {
   let [shoes] = useState(data);
+  let navigate = useNavigate(); // 페이지 이동을 도와주는 함수 (Link태그는 a태그 생성됨)
 
   return (
     <div className="App">
@@ -13,40 +17,25 @@ function App() {
         <Container>
           <Navbar.Brand href="#home">ShoeShop</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Cart</Nav.Link>
+            <Nav.Link onClick={()=>{navigate("/");}}>Home</Nav.Link>
+            <Nav.Link onClick={()=>{navigate("/detail");}}>Detail</Nav.Link>
+            {/* <Link to="/detail">상세페이지</Link> */}
+            {/* navigate(1) : 앞으로 한페이지, navigate(-1) : 뒤로 한페이지*/}
           </Nav>
         </Container>
       </Navbar>
 
-      {/* 이미지 */}
-      {/* src 폴더에 있는 이미지 - import 후 사용 */}
-      <div className="main-bg" style={{ backgroundImage: "url(" + bg + ")" }}></div>
-      {/* <img src={bg} alt="" className="main-bg"/> */}
-      {/* pubilc 폴더 (수정이 필요없는 static 파일 보관) - 이미지 import 없이 /이미지경로 사용 */}
-      {/* <img src={process.env.PUBLIC_URL + '/이미지경로'} />  */}
-
-      <div className="container">
-        <div className="row">
-          {
-            shoes.map((shoes, i)=>{
-              return (
-                <Card shoes={shoes} i={i} />
-              )
-            })
-          }
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function Card(props) {
-  return (
-    <div className="col-md-4">
-      <img src={"https://codingapple1.github.io/shop/shoes" + (props.i+1) + ".jpg"} alt="" width="80%" />
-      <h4>{props.shoes.title}</h4>
-      <p>{props.shoes.price}</p>
+      <Routes>
+        <Route path="/" element={<Home shoes={shoes} />} />
+        <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
+        <Route path="/about" element={<About />}>
+          {/* 서브 경로 nested routes의 element 보여주는 곳은 <Outlet> */}
+          <Route path="member" element={<div>멤버들</div>} />
+          <Route path="location" element={<div>회사위치</div>} />
+        </Route>
+        {/* 설정한 경로 외의 모든 경로, 404페이지 */}
+        <Route path="*" element={<div>없는페이지</div>} />
+      </Routes>
     </div>
   );
 }
