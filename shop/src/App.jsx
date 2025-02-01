@@ -6,6 +6,7 @@ import Detail from "./Pages/Detail.jsx";
 import Home from "./Pages/Home.jsx";
 import About from "./Pages/About.jsx";
 import data from "./data.jsx";
+import Cart from "./Pages/Cart.jsx";
 
 export let Context1 = createContext();
 
@@ -50,6 +51,7 @@ function App() {
             </Context1.Provider>
           }
         />
+        <Route path="/cart" element={<Cart />}/>
         <Route path="/about" element={<About />}>
           {/* 서브 경로 nested routes의 element 보여주는 곳은 <Outlet> */}
           <Route path="member" element={<div>멤버들</div>} />
