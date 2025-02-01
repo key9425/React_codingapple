@@ -8,7 +8,7 @@ import About from "./Pages/About.jsx";
 import data from "./data.jsx";
 
 function App() {
-  let [shoes] = useState(data);
+  let [shoes, setShoes] = useState(data);
   let navigate = useNavigate(); // 페이지 이동을 도와주는 함수 (Link태그는 a태그 생성됨)
 
   return (
@@ -26,7 +26,7 @@ function App() {
       </Navbar>
 
       <Routes>
-        <Route path="/" element={<Home shoes={shoes} />} />
+        <Route path="/" element={<Home shoes={shoes} setShoes={setShoes} />} />
         <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
         <Route path="/about" element={<About />}>
           {/* 서브 경로 nested routes의 element 보여주는 곳은 <Outlet> */}
